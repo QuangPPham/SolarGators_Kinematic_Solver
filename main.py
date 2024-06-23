@@ -20,6 +20,5 @@ if __name__ == "__main__":
                       [-114.3, 200, 177.8], # LCF: lower front (x,y,z)
                       [76.2, 200, 177.8]]) # LCR: lower rear (x,y,z)
 
-    springList = np.arange(189.0, 159, -0.01)
-    solver = kinSolve(coords, springList, True)
+    solver = kinSolve(coords, True)
     solver.solve()

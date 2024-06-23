@@ -2,8 +2,8 @@
 Solar Gators Suspension Kinematics Solver
 By: Quang Pham, 2024
 
-The goal of this script is to calculate the suspension movement
-due to bump and calculate suspension parameters from a quarter-car model.
+The goal of this script is to calculate the suspension movement due to bump 
+and rebound and calculate suspension parameters from a quarter-car model.
 
 Note: +x is rearward, +y is outward (from right wheel), +z is upward. Origin: x_0 = FG_x, y_0 = center of car, z_0 = 0
 
@@ -15,11 +15,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class kinSolve():
-    def __init__(self, coords, spring, isPlot=True):
+    def __init__(self, coords, isPlot=True):
         """
-        Define the static configuration of the suspension and desired spring motion.
+        Define the static configuration of the suspension.
         Input:
-            coords: array of coordinates for each of the suspension points below for the right wheel
+            coords: array of coordinates for each of the suspension points below for the right wheel.
                 FG: initial wheel center (x,y,z)
                 SP_in: spring chassis attachment
                 SP_out: spring rocker attachment
@@ -37,9 +37,8 @@ class kinSolve():
                 UCR: upper rear (x,y,z)
                 LCF: lower front (x,y,z)
                 LCR: lower rear (x,y,z)
-            spring: array of spring length in mm
         ===================================================================================
-        Output: camber, toe, caster, mechanical trail, kpi, scrub, (optional: spring force, wheel rate)
+        Output: camber, toe, caster, mechanical trail, kpi, scrub, spring length, (optional: spring force, wheel rate)
                 Graphs of all of the above vs bump motion
         """
         # Get initial coordinates
@@ -100,8 +99,7 @@ class kinSolve():
         self.lWC_WB = np.linalg.norm(self.WB-self.WC) # Distance from wheel center to contact patch
 
         # Array of spring lengths
-        self.spring = spring
-        self.spring = np.insert(self.spring, 0, self.lSP_in_SP_out)
+        self.spring = np.arange(self.lSP_in_SP_out*1.25, self.lSP_in_SP_out*0.6, -0.05)
 
         # Allocate arrays of suspension parameters for plotting
         self.BM_list = np.zeros_like(self.spring)
@@ -397,11 +395,10 @@ class kinSolve():
     def solve(self):
         # Solve for the entire simulation
         i = 0
-        self.BM_list[i], self.HTC_list[i], self.WR_list[i], self.gamma_list[i], self.delta_list[i], self.phi_list[i], self.TR_list[i], self.theta_list[i], self.GO_list[i], self.RZ_list[i] = self.susParam()
-        for springLength in self.spring[1:]:
+        for springLength in self.spring:
             self.bump_step(springLength)
-            i = i+1
             self.BM_list[i], self.HTC_list[i], self.WR_list[i], self.gamma_list[i], self.delta_list[i], self.phi_list[i], self.TR_list[i], self.theta_list[i], self.GO_list[i], self.RZ_list[i] = self.susParam()
+            i = i+1
 
         if self.isPlot:
             self.plot()
