@@ -7,7 +7,7 @@ Run by writing in the command line in the folder where the scripts are located:
 python main.py
 ``` 
 
-Input: coordinates of the below points for the right wheel, and the array of spring lengths. See main.py for example usage.   
+Input: coordinates of the below points for the right wheel. See main.py for example usage.   
    * FG: initial wheel center (x,y,z)   
    * SP_in: spring chassis attachment  
    * SP_out: spring rocker attachment  
