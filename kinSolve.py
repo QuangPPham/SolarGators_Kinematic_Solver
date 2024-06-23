@@ -99,7 +99,7 @@ class kinSolve():
         self.lWC_WB = np.linalg.norm(self.WB-self.WC) # Distance from wheel center to contact patch
 
         # Array of spring lengths
-        self.spring = np.arange(self.lSP_in_SP_out*1.25, self.lSP_in_SP_out*0.6, -0.05)
+        self.spring = np.arange(self.lSP_in_SP_out*1.25, self.lSP_in_SP_out*0.55, -0.05)
 
         # Allocate arrays of suspension parameters for plotting
         self.BM_list = np.zeros_like(self.spring)
@@ -362,7 +362,7 @@ class kinSolve():
 
         # HTC
         axis2[0, 0].plot(X,self.HTC_list)
-        axis2[0, 0].set_title("Half-track change vs Bump")
+        axis2[0, 0].set_title("Half Track Change vs Bump")
         axis2[0, 0].set_ylabel(length_units)
         
         # WR
@@ -370,8 +370,8 @@ class kinSolve():
         axis2[0, 1].set_title("Wheel Recession vs Bump")
 
         # Spring length
-        axis2[0, 2].plot(X, self.spring) 
-        axis2[0, 2].set_title("Spring Length vs Bump")
+        axis2[0, 2].plot(X, self.spring-self.lSP_in_SP_out) 
+        axis2[0, 2].set_title("Spring Displacement vs Bump")
         
         # Mechanical trail
         axis2[1, 0].plot(X, self.TR_list)
