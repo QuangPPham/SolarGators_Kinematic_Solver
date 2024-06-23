@@ -1,7 +1,8 @@
 # SolarGators_Kinematic_Solver
 Kinematics Solver for Suspension geometry  
-By: Quang Pham, 2024
-
+By: Quang Pham, 2024  
+  
+Make sure you have python, numpy, and matplotlib installed.  
 Run by writing in the command line in the folder where the scripts are located:  
 ```  
 python main.py
